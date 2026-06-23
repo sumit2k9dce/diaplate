@@ -19,7 +19,6 @@ function getLoaderMessage(body, hasImage) {
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
 
-  }
 
   const { From, Body, NumMedia, MediaUrl0, MediaContentType0 } = req.body;
   const hasImage = parseInt(NumMedia || 0) > 0;
