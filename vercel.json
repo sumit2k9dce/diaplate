@@ -1,15 +1,9 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "api/**/*.js", "use": "@vercel/node" }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" }
-  ],
   "crons": [
     {
       "path": "/api/cron/reminders",
-      "schedule": "30 2,4,8,15 * * *"
+      "schedule": "30 15 * * *"
     }
   ]
 }
