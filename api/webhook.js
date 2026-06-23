@@ -19,6 +19,13 @@ function getLoaderMessage(body, hasImage) {
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
 
+  if (process.env.NODE_ENV === "production") {
+    const sig = req.headers["x-twilio-signature"];
+    const url = `https://${req.headers.host}/api/webhook`;
+    if (!twilio.validateRequest(process.env.TWILIO_AUTH_TOKEN, sig, url, req.body)) {
+      return res.status(403).json({ error: "Invalid signature" });
+    }
+  }
 
   const { From, Body, NumMedia, MediaUrl0, MediaContentType0 } = req.body;
   const hasImage = parseInt(NumMedia || 0) > 0;
